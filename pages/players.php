@@ -5,7 +5,7 @@ $user_dataM = new USER();
 
 
 /************** Query all that ish **************/
-
+//this is an awesome commment, wow!
 
 
 /************** End of that query yo **************/
@@ -26,7 +26,7 @@ $user_dataM = new USER();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/js/bootstrap-select.min.js"></script>
-  
+
 </head>
 <body>
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-info">
@@ -58,13 +58,13 @@ $user_dataM = new USER();
 			<h1>
 				Players
 			</h1>
-			
+
 			<br><br><br>
-			
+
 			<div>
 				<div class="btn-group">
 					<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			
+
 					</button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">Action</a>
