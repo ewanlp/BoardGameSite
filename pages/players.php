@@ -5,8 +5,11 @@ $user_dataM = new USER();
 
 
 /************** Query all that ish **************/
+
+//query var is created, all rows from the players table. ordered by their name
   $query = $user_dataM->runQuery("SELECT * FROM players ORDER BY name");
-  //only need to bind params when they're used in the query
+
+  //query var is executed and now contains ALL rows that matched the query above. See line ~134 for continuation
   $query->execute();
 
 
@@ -79,7 +82,7 @@ hr.style18:before {
       <h1>
 				Players
 			</h1>
-      <hr class="style18">
+      <hr class="style18"> <!--This is the horizontal line-->
       <br>
     </div>
     <div class="col-8 offset-2">
@@ -93,7 +96,7 @@ hr.style18:before {
 <!--Start of buttons-->
 	<div class="row">
     <div class="col-8 offset-2">
-      <form class="form-group" role="form" method="post">
+      <form class="form-group" role="form" method="post"> <!--Form is needed because we're getting input from the user-->
         <div class="btn-group-lg" data-toggle="buttons">
           <button type="button" class="btn btn-info active" name="Alpha" data-toggle="collapse" data-target="#collapseExample"> Alphabetical </button>
           <button type="button" class="btn btn-info" name="Recent" data-toggle="collapse" data-target="#collapseExample"> Recent Play </button>
@@ -106,7 +109,7 @@ hr.style18:before {
 
   <br><br>
 <!--Start of second group of buttons-->
-
+<!--These buttons will be used to organize the rows a bit better and limit it a bit-->
   <br>
 </div>
 
@@ -115,7 +118,7 @@ hr.style18:before {
 <div id="table" class="container-fluid text-center">
   <div class="row">
     <div class="col-8 offset-2">
-      <div id="collapseExample" class="collapse">
+      <div id="collapseExample" class="collapse"> <!--Allows the table to be collapsed by the buttons above!-->
         <table class="table table-striped table-bordered table-hover table-small">
           <thead class="thead-inverse">
             <tr>
@@ -124,6 +127,10 @@ hr.style18:before {
             </tr>
           </thead>
           <tbody>
+            <!--
+              Loop thru ever row in the query from above, fetch gets us the row info we need.
+              Echo out from php, listing the name and id from each row!
+          -->
             <?php while ($row = $query->fetch(PDO::FETCH_ASSOC)){ ?>
     					<tr>
     						<td><?php echo htmlspecialchars($row['name']) ?></td>
