@@ -19,6 +19,7 @@ $user_dataM = new USER();
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css">
   <script rel="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 
 
@@ -64,15 +65,15 @@ $user_dataM = new USER();
 		<div class="col"></div>
 		<div class="col-8">
 			<div class="btn-group-vertical btn-block" role="group" aria-label="">
-				<button type="button" class="btn btn-primary">Add a Play</button>
+				<button type="button" class="btn btn-primary"><span class="oi oi-plus"></span>        Add a Play      <span class="oi oi-plus"></span></button>
 				<br>
-				<a href="pages/players.php" class="btn btn-info" role="button"><span class="glyphicon glyphicon-user"> Players <span class="glyphicon glyphicon-user"></a>
+				<a href="pages/players.php" class="btn btn-info" role="button"><span class="oi oi-person"></span>        Players        <span class="oi oi-person"></span></a>
 				<br>
-				<button type="button" class="btn btn-success">Games</button>
+				<button type="button" class="btn btn-success"><span class="oi oi-puzzle-piece"></span>        Games        <span class="oi oi-puzzle-piece"></span></button>
 				<br>
-				<button type="button" class="btn btn-warning">Stats</button>
+				<button type="button" class="btn btn-warning"><span class="oi oi-pie-chart"></span>        Stats        <span class="oi oi-pie-chart"></span></button>
 				<br>
-				<button type="button" class="btn btn-danger">History</button>
+				<button type="button" class="btn btn-danger"><span class="oi oi-calendar"></span>        History        <span class="oi oi-calendar"></span></button>
 				<br>
 			</div>
 		</div>
