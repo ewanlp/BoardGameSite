@@ -1,153 +1,181 @@
-<?php
-session_start();
-require_once '../ePHP/class.user.php';
-$user_dataM = new USER();
-
-
-/************** Query all that ish **************/
-
-//query var is created, all rows from the players table. ordered by their name
-  $query = $user_dataM->runQuery("SELECT * FROM players ORDER BY name");
-
-  //query var is executed and now contains ALL rows that matched the query above. See line ~134 for continuation
-  $query->execute();
-
-
-/************** End of that query yo **************/
-
-?>
-
 <html>
-<style>
-body {
-    background: linear-gradient(to bottom, #33ccff 0%, #66ffcc 100%);
-}
-hr.style18 {
-  height: 30px;
-  border-style: solid;
-  border-color: dark;
-  border-width: 6px 0 0 0;
-  border-radius: 20px;
-}
-hr.style18:before {
-  display: block;
-  content: "";
-  height: 30px;
-  margin-top: -31px;
-  border-style: solid;
-  border-color: dark;
-  border-width: 0 0 1px 0;
-  border-radius: 20px;
-}
-</style>
-<head>
-  <title>Your Data</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.3/css/bootstrap-select.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-  <script rel="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-</head>
-<body>
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-info">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" href="#">Navbar</a>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+	<head>
+		<title>Players Page</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" />
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/home.css">
+	</head>
+
+	<body>
+		<div class="container" style="margin-top: 30px;">
+			<div id="heading" class="container-fluid text-center">
+		  	<div class="row">
+		  		<div class="col-6 offset-3">
+		        <h1>Players</h1>
+		        <hr class="style18"> <!--This is the horizontal line-->
+		        <br>
+		      </div>
+		      <div class="col-12">
+		        <h5>Welcome to the Players page. Select a Player to find out more info about them, or sort a group to see what others have been up to!</h5>
+		        <br><br>
+		      </div>
+		    </div>
+		  </div>
+			<div class="container-fluid text-center">
+		    <div class="row">
+		      <div class="col-12">
+		        <div align="right">
+						  <button type="button" id="add_button" data-toggle="modal" data-target="#userModal" class="btn btn-info btn-lg">Add</button>
+						</div>
+		        <br><br>
+		        <table id="user_data" class="table table-striped table-bordered table-hover table-small">
+		          <thead>
+		            <tr>
+		              <th>Name</th>
+		              <th width="10%">Edit</th>
+		              <th width="10%">Delete</th>
+		            </tr>
+		          </thead>
+		        </table>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 
 
-<br><br><br><br>
-
-<div id="heading" class="container-fluid text-center">
-
-<!--Start of the Heading, and sorting buttons-->
-
-	<div class="row">
-		<div class="col-6 offset-3">
-      <h1>
-				Players
-			</h1>
-      <hr class="style18"> <!--This is the horizontal line-->
-      <br>
-    </div>
-    <div class="col-8 offset-2">
-      <h5>
-        Welcome to the Players page. Select a Player to find out more info about them, or sort a group to see what others have been up to!
-      </h5>
-      <br><br>
-    </div>
-  </div>
-
-<!--Start of buttons-->
-	<div class="row">
-    <div class="col-8 offset-2">
-      <form class="form-group" role="form" method="post"> <!--Form is needed because we're getting input from the user-->
-        <div class="btn-group-lg" data-toggle="buttons">
-          <button type="button" class="btn btn-info active" name="Alpha" data-toggle="collapse" data-target="#collapseExample"> Alphabetical </button>
-          <button type="button" class="btn btn-info" name="Recent" data-toggle="collapse" data-target="#collapseExample"> Recent Play </button>
-          <button type="button" class="btn btn-info" name="Plays" data-toggle="collapse" data-target="#collapseExample"> Most Plays </button>
-          <button type="button" class="btn btn-info" name="Wins" data-toggle="collapse" data-target="#collapseExample"> Wins </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <br><br>
-<!--Start of second group of buttons-->
-<!--These buttons will be used to organize the rows a bit better and limit it a bit-->
-  <br>
-</div>
-
-<!--Start of the table!-->
-
-<div id="table" class="container-fluid text-center">
-  <div class="row">
-    <div class="col-8 offset-2">
-      <div id="collapseExample" class="collapse"> <!--Allows the table to be collapsed by the buttons above!-->
-        <table class="table table-striped table-bordered table-hover table-small">
-          <thead class="thead-inverse">
-            <tr>
-              <th>Name</th>
-              <th>id</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!--
-              Loop thru ever row in the query from above, fetch gets us the row info we need.
-              Echo out from php, listing the name and id from each row!
-          -->
-            <?php while ($row = $query->fetch(PDO::FETCH_ASSOC)){ ?>
-    					<tr>
-    						<td><?php echo htmlspecialchars($row['name']) ?></td>
-    						<td><?php echo htmlspecialchars($row['id']) ?></td>
-    					</tr>
-    				<?php } ?>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	<div id="userModal" class="modal fade">
+		<div class="modal-dialog">
+			<form method="post" id="user_form" enctype="multipart/form-data">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add User</h4>
+					</div>
+					<div class="modal-body">
+						<label>Name</label>
+						<input type="text" name="first_name" id="first_name" class="form-control" />
+						<br />
+					</div>
+					<div class="modal-footer">
+						<input type="hidden" name="user_id" id="user_id" />
+						<input type="hidden" name="operation" id="operation" />
+						<input type="submit" name="action" id="action" class="btn btn-success" value="Add" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
+<script type="text/javascript" language="javascript" >
+$(document).ready(function(){
+	$('#add_button').click(function(){
+		$('#user_form')[0].reset();
+		$('.modal-title').text("Add User");
+		$('#action').val("Add");
+		$('#operation').val("Add");
+		$('#user_uploaded_image').html('');
+	});
+
+	var dataTable = $('#user_data').DataTable({
+		"processing":true,
+		"serverSide":true,
+		"order":[],
+		"orderable": true,
+		"ajax":{
+			url:"../testing/fetch.php",
+			type:"POST"
+		},
+		"columnDefs":[{
+			"targets":[1,2],
+			"orderable":false
+		},],
+	});
+
+	/*$(document).on('submit', '#user_form', function(event){
+		event.preventDefault();
+		var firstName = $('#first_name').val();
+		var lastName = $('#last_name').val();
+		var extension = $('#user_image').val().split('.').pop().toLowerCase();
+		if(extension != '')
+		{
+			if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1)
+			{
+				alert("Invalid Image File");
+				$('#user_image').val('');
+				return false;
+			}
+		}
+		if(firstName != '' && lastName != '')
+		{
+			$.ajax({
+				url:"insert.php",
+				method:'POST',
+				data:new FormData(this),
+				contentType:false,
+				processData:false,
+				success:function(data)
+				{
+					alert(data);
+					$('#user_form')[0].reset();
+					$('#userModal').modal('hide');
+					dataTable.ajax.reload();
+				}
+			});
+		}
+		else
+		{
+			alert("Both Fields are Required");
+		}
+	});*/
+
+	/*$(document).on('click', '.update', function(){
+		var user_id = $(this).attr("id");
+		$.ajax({
+			url:"fetch_single.php",
+			method:"POST",
+			data:{user_id:user_id},
+			dataType:"json",
+			success:function(data)
+			{
+				$('#userModal').modal('show');
+				$('#first_name').val(data.first_name);
+				$('#last_name').val(data.last_name);
+				$('.modal-title').text("Edit User");
+				$('#user_id').val(user_id);
+				$('#user_uploaded_image').html(data.user_image);
+				$('#action').val("Edit");
+				$('#operation').val("Edit");
+			}
+		})
+	});*/
+
+	/*$(document).on('click', '.delete', function(){
+		var user_id = $(this).attr("id");
+		if(confirm("Are you sure you want to delete this?"))
+		{
+			$.ajax({
+				url:"delete.php",
+				method:"POST",
+				data:{user_id:user_id},
+				success:function(data)
+				{
+					alert(data);
+					dataTable.ajax.reload();
+				}
+			});
+		}
+		else
+		{
+			return false;
+		}
+	});*/
+
+
+});
+</script>
