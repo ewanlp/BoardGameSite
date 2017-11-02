@@ -1,4 +1,5 @@
 <?php
+
 if(!isset($_SESSION)) {
   session_start();
 }
@@ -34,8 +35,9 @@ if(isset($_POST["order"])) {
 } else {
 	$query .= 'ORDER BY name ASC ';
 }
+
 if($_POST["length"] != -1) {
-	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+	$query .= 'LIMIT ' .$_POST['start']. ', ' .$_POST['length']. ' ';
 }
 $statement = $user_fetch->runQuery($query);
 $statement->execute();
